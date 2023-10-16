@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addPhoto } from '../photos.slice';
 
 // Task 2: Import the `useDispatch()` method from the appropriate package
 // Task 3: Import the `addPhoto()` action creator from the photos slice
@@ -7,6 +9,7 @@ import './create.css';
 
 export default function CreatePhoto() {
   const [formData, setFormData] = useState({ imageUrl: '', caption: '' });
+  const dispatch = useDispatch();
   // Task 4: Store a reference to the Redux store's dispatch method in a variable called `dispatch`
 
   function handleChange({ target: { name, value } }) {
@@ -18,7 +21,7 @@ export default function CreatePhoto() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // Task 5: Dispatch the `addPhoto()` action creator, passing in the form data
+    dispatch(addPhoto(formData))// Task 5: Dispatch the `addPhoto()` action creator, passing in the form data
     setFormData({ imageUrl: '', caption: '' });
   }
 
@@ -30,6 +33,7 @@ export default function CreatePhoto() {
         <input
           id="url"
           name="imageUrl"
+          required = {true}
           onChange={handleChange}
           placeholder="e.g., https://images.dog.ceo/breeds/australian-shepherd/pepper.jpg"
           type="text"
@@ -42,6 +46,7 @@ export default function CreatePhoto() {
           id="caption"
           name="caption"
           onChange={handleChange}
+          required = {true}
           placeholder="e.g., Australian Shepherd"
           type="text"
           value={formData.caption}
